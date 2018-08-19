@@ -1,0 +1,11 @@
+D:\projects\Clinic\Clinic\bin\Debug\netcoreapp2.0\Clinic.deps.json
+D:\projects\Clinic\Clinic\bin\Debug\netcoreapp2.0\Clinic.runtimeconfig.json
+D:\projects\Clinic\Clinic\bin\Debug\netcoreapp2.0\Clinic.runtimeconfig.dev.json
+D:\projects\Clinic\Clinic\bin\Debug\netcoreapp2.0\Clinic.dll
+D:\projects\Clinic\Clinic\bin\Debug\netcoreapp2.0\Clinic.pdb
+D:\projects\Clinic\Clinic\obj\Debug\netcoreapp2.0\Clinic.csprojResolveAssemblyReference.cache
+D:\projects\Clinic\Clinic\obj\Debug\netcoreapp2.0\Clinic.csproj.CoreCompileInputs.cache
+D:\projects\Clinic\Clinic\obj\Debug\netcoreapp2.0\Clinic.AssemblyInfoInputs.cache
+D:\projects\Clinic\Clinic\obj\Debug\netcoreapp2.0\Clinic.AssemblyInfo.cs
+D:\projects\Clinic\Clinic\obj\Debug\netcoreapp2.0\Clinic.dll
+D:\projects\Clinic\Clinic\obj\Debug\netcoreapp2.0\Clinic.pdb
