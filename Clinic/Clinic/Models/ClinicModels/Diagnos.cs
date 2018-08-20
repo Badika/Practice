@@ -9,5 +9,7 @@ namespace Clinic.Models.ClinicModels
     {
         public string Name { get; set; }
         public string Description { get; set; }
+
+        List<AppliedDiagnos> AppliedDiagnoses { get; set; }
     }
 }

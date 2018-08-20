@@ -14,5 +14,7 @@ namespace Clinic.Models.ClinicModels
         public Doctor Doctor { get; set; }
 
         public DateTime Date { get; set; }
+
+        public List<AppliedDiagnos> AppliedDiagnoses { get; set; }
     }
 }

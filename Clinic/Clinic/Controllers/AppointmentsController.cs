@@ -13,22 +13,26 @@ namespace Clinic.Controllers
     public class AppointmentsController : Controller
     {
         IClinicRepository<Appointment> _db;
-        //IClinicRepository<Patient> _patientDb;
-        //IClinicRepository<Doctor> _doctorDb;
-        ClinicContext _context;
+        IClinicRepository<Patient> _patdb;
+        IClinicRepository<Doctor> _docDb;
+        ClinicContext context;
 
         public AppointmentsController(ClinicContext context)
         {
             _db = new SQLRepository<Appointment>(context);
-            //_patientDb = new SQLRepository<Patient>(context);
-            //_doctorDb = new SQLRepository<Doctor>(context);
-            _context = context;
+            _patdb = new SQLRepository<Patient>(context);
+            _docDb = new SQLRepository<Doctor>(context);
+            this.context = context;
         }
 
         // GET: Appointments
         public IActionResult Index()
         {
-            return View(_db.GetAll());
+            _db.GetAll();
+
+            var appointments = context.Appointments.Include(p => p.Patient).Include(d => d.Doctor).ToList();
+
+            return View(appointments);
         }
 
         // GET: Appointments
@@ -39,41 +43,30 @@ namespace Clinic.Controllers
 
         private IEnumerable<Appointment> GetPatientAppointments(int id)
         {
-            //////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////
+            var appointments = context.Appointments
+                .Where(a => a.PatientId == id)
+                .Include(p => p.Patient)
+                .Include(d => d.Doctor)
+                .ToList();
 
-
-            //var app = _context.Appointments.Where(i => i.PatientId == id).Include(i => i.Patient).ToList();
-
-            var app = _db.GetAll();
-            List<Appointment> list = new List<Appointment>();
-            foreach(var i in app)
-            {
-                if(i.PatientId == id)
-                {
-                    list.Add(i);
-                }
-            }
-
-            return list;
+            return appointments;
         }
 
         // GET: Appointments
         public IActionResult DoctorAppointments(int id)
         {
-            return View("Index", GetDoctorAppointments(id)); ///////////////////
+            return View("Index", GetDoctorAppointments(id)); 
         }
 
         private IEnumerable<Appointment> GetDoctorAppointments(int id)
         {
-            var blog2 = _context.Appointments
-                    .Where(b => b.DoctorId == id)
-                    .ToList();
+            var appointments = context.Appointments
+                 .Where(a => a.DoctorId == id)
+                 .Include(p => p.Patient)
+                 .Include(d => d.Doctor)
+                 .ToList();
 
-            return blog2;
+            return appointments;
         }
 
         // GET: Appointments/Details/5
@@ -84,7 +77,11 @@ namespace Clinic.Controllers
                 return NotFound();
             }
 
-            var appointment = _db.GetOne((int)id);
+            var appointment = context.Appointments
+                .Where(a => a.Id == id)
+                .Include(p => p.Patient)
+                .Include(d => d.Doctor)
+                .FirstOrDefault();
 
             if (appointment == null)
             {

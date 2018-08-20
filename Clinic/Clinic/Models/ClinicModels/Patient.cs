@@ -12,8 +12,8 @@ namespace Clinic.Models.ClinicModels
         //public Address PatientAddress { get; set; }
         public DateTime BDay { get; set; }
         public string PhoneNumber { get; set; }
-
-
+        public List<Appointment> Appointments { get; set; }
+             
         #region ctors
 
         public Patient()

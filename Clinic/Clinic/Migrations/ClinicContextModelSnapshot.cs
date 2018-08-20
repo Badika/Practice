@@ -31,6 +31,10 @@ namespace Clinic.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("DiagnosId");
+
                     b.ToTable("AppliedDiagnoses");
                 });
 
@@ -46,6 +50,10 @@ namespace Clinic.Migrations
                     b.Property<int>("PatientId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
                 });
@@ -94,6 +102,32 @@ namespace Clinic.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("Clinic.Models.ClinicModels.AppliedDiagnos", b =>
+                {
+                    b.HasOne("Clinic.Models.ClinicModels.Appointment", "Appointment")
+                        .WithMany("AppliedDiagnoses")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Clinic.Models.ClinicModels.Diagnos", "Diagnos")
+                        .WithMany()
+                        .HasForeignKey("DiagnosId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Clinic.Models.ClinicModels.Appointment", b =>
+                {
+                    b.HasOne("Clinic.Models.ClinicModels.Doctor", "Doctor")
+                        .WithMany("Appointments")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Clinic.Models.ClinicModels.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

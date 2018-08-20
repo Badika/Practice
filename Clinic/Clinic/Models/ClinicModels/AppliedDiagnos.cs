@@ -8,6 +8,9 @@ namespace Clinic.Models.ClinicModels
     public class AppliedDiagnos : BaseEntity
     {
         public int AppointmentId { get; set; }
+        public Appointment Appointment { get; set; }
+
         public int DiagnosId { get; set; }
+        public Diagnos Diagnos { get; set; }
     }
 }
