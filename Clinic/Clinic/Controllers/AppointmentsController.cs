@@ -15,6 +15,8 @@ namespace Clinic.Controllers
         IClinicRepository<Appointment> _db;
         IClinicRepository<Patient> _patdb;
         IClinicRepository<Doctor> _docDb;
+        IClinicRepository<Diagnos> _diagdb;
+        IClinicRepository<AppliedDiagnos> _appDiagdb;
         ClinicContext context;
 
         public AppointmentsController(ClinicContext context)
@@ -22,6 +24,8 @@ namespace Clinic.Controllers
             _db = new SQLRepository<Appointment>(context);
             _patdb = new SQLRepository<Patient>(context);
             _docDb = new SQLRepository<Doctor>(context);
+            _diagdb = new SQLRepository<Diagnos>(context);
+            _appDiagdb = new SQLRepository<AppliedDiagnos>(context);
             this.context = context;
         }
 
@@ -81,6 +85,7 @@ namespace Clinic.Controllers
                 .Where(a => a.Id == id)
                 .Include(p => p.Patient)
                 .Include(d => d.Doctor)
+                .Include(a => a.AppliedDiagnoses)
                 .FirstOrDefault();
 
             if (appointment == null)

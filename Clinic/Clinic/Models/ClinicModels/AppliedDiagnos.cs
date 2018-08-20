@@ -12,5 +12,16 @@ namespace Clinic.Models.ClinicModels
 
         public int DiagnosId { get; set; }
         public Diagnos Diagnos { get; set; }
+
+        public AppliedDiagnos()
+        {
+
+        }
+
+        public AppliedDiagnos(int AppointmentId, int DiagnosId)
+        {
+            this.AppointmentId = AppointmentId;
+            this.DiagnosId = DiagnosId;
+        }
     }
 }

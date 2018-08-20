@@ -31,7 +31,27 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
     </dl>
+    <dl class="dl-horizontal"></dl>
+
 </div>
+
+    <h4>Diagnoses</h4>
+    <a href="Index">Add</a>
+    @*///////////////////////////////////////////////////////////*@ 
+    @foreach (var item in Model.AppliedDiagnoses)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnos.Name)
+                @Html.DisplayFor(modelItem => item.Diagnos.Description)
+            </td>
+           
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
