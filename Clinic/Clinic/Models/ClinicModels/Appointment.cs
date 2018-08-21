@@ -16,5 +16,14 @@ namespace Clinic.Models.ClinicModels
         public DateTime Date { get; set; }
 
         public List<AppliedDiagnos> AppliedDiagnoses { get; set; }
+
+        public Appointment()
+        {
+
+        }
+        public Appointment(int id)
+        {
+            this.Id = id;
+        }
     }
 }

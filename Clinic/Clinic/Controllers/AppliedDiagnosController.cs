@@ -16,11 +16,13 @@ namespace Clinic.Controllers
 
         IClinicRepository<AppliedDiagnos> _db;
         IClinicRepository<Diagnos> _diagdb;
+        IClinicRepository<Appointment> _appdb;
 
         public AppliedDiagnosController(ClinicContext context)
         {
             _db = new SQLRepository<AppliedDiagnos>(context);
             _diagdb = new SQLRepository<Diagnos>(context);
+            _appdb = new SQLRepository<Appointment>(context);
             _context = context;
         }
 
@@ -53,10 +55,39 @@ namespace Clinic.Controllers
         // GET: AppliedDiagnos/Create
         public IActionResult Create()
         {
-            ViewData["AppointmentId"] = new SelectList(_context.Appointments, "Id", "Id");
-            ViewData["DiagnosId"] = new SelectList(_context.Diagnoses, "Id", "Id");
+            //ViewData["AppointmentId"] = _appdb.GetAll().ToList(); /*new SelectList(_context.Appointments, "Id", "Id");*/
+            //ViewData["DiagnosId"] = _diagdb.GetAll().ToList();
+            ViewData["AppointmentId"] = new SelectList(_appdb.GetAll(), "Id", "Id");
+            ViewData["DiagnosId"] = new SelectList(_context.Diagnoses, "Id", "Name");
             return View();
         }
+
+        [HttpGet]
+        public IActionResult AddDiagnos(int? appointmetnId)
+        {
+            if (appointmetnId == null)
+            {
+                return NotFound();
+            }
+            ViewBag.AppointmentId = (int)appointmetnId;// new List<int>((int)appointmetnId);
+            ViewData["DiagnosId"] = new SelectList(_context.Diagnoses, "Id", "Name");
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddDiagnos(AppliedDiagnos appliedDiagnos)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Create(appliedDiagnos);
+                _db.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["AppointmentId"] = new SelectList(_context.Appointments, "Id", "Id", appliedDiagnos.AppointmentId);
+            ViewData["DiagnosId"] = _context.AppliedDiagnoses.Include(p => p.Diagnos).ToList();
+            return View(appliedDiagnos);
+        }
+
 
         // POST: AppliedDiagnos/Create
         [HttpPost]
